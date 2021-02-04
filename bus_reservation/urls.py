@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',main.views.seat,name="seat"),
     path('chk',main.views.chk,name="chk"),
+    path('cancel',main.views.seat_cancel,name="seat_cancel"),
+    path('chk_cancel',main.views.chk_cancel,name="chk_cancel"),
 ]

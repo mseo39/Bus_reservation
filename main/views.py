@@ -29,3 +29,31 @@ def chk(request):
         return redirect('seat')
 
     return redirect('seat')
+
+def seat_cancel(request):
+
+    chk_list = []
+    i=1
+    while i<10:
+        bus_number=get_object_or_404(Bus, number=i)
+        if bus_number.check==1:
+            chk_list.append("")
+        if bus_number.check!=1:
+            chk_list.append("disabled")
+        i=i+1
+
+    return render(request,'seat_cancel.html',{'list':chk_list})
+
+def chk_cancel(request):
+    #폼 입력값 가져오기
+    if request.method == 'POST':
+        selected = request.POST.getlist('answer[]')
+
+        for select in selected:
+            number=get_object_or_404(Bus, number=select)
+            number.check-=1
+            number.save()
+
+        return redirect('seat_cancel')
+
+    return redirect('seat_cancel')
