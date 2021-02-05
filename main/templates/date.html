@@ -41,6 +41,11 @@
 
 <body>
 
+    {% if user.is_authenticated %}
+    <li><a> 어서오세요! {{user}}님 </a></li>
+    <li><a href="{% url 'logout' %}" type="submit">로그아웃</a></li>
+    
+
     <div class="regibox" align="center">
         <form method="POST" action="select_date">
             {% csrf_token %}
@@ -58,6 +63,10 @@
             <button type="submit" value="submit">취소할 날짜 선택</button>
         </form>
     </div>
+    {% else %}
+    <li><a href="{% url 'login' %}" type="submit">로그인</a></li>
+    <li><a href="{% url 'signup' %}" type="submit">회원가입</a></li>
+    {% endif %}
 </body>
 
 </html>

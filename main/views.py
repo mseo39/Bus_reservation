@@ -35,6 +35,8 @@ from main.models  import Bus
 
 #     return render(request,'seat_cancel.html',{'list':chk_list})
 
+#-----------------좌석 선택
+
 def chk(request):
     #폼 입력값 가져오기
     if request.method == 'POST':
@@ -64,7 +66,7 @@ def chk_cancel(request):
 
     return redirect('date')
 
-#-------------------날짜별
+#-------------------날짜 선택
 
 def select_date(request):
     #폼 입력값 가져오기
@@ -114,3 +116,36 @@ def cancel_date(request):
 def date(request):
 
     return render(request,'date.html')
+
+
+#--------------------------로그인, 로그아웃
+
+# Create your views here.
+
+from django.contrib.auth.forms import User
+from django.contrib.auth.views import LoginView
+from django.contrib import auth
+from main.forms import UserForm
+from main.forms import LoginForm
+from django.contrib.auth.views import LogoutView
+
+def signup(request):
+    if request.method == "POST":
+        new_user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
+        auth.login(request, new_user)
+        return redirect('date')
+        
+    return render(request, 'signup.html')
+
+def login(request):
+    if request.method == "POST":
+        username=request.POST.get('username',None)
+        password=request.POST.get('password',None)
+        user=auth.authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('date')
+        else:
+            return HttpResponse('Login failed. Try again.')
+    else:
+        return render(request, 'login.html')
