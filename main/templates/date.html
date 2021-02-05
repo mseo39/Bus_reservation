@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <title>예매날짜</title>
+    <style>
+        form {
+            padding: 100px;
+        }
+
+        .regibox {
+            width: 800px;
+            margin: 0 auto;
+            margin-top: 100px;
+            border: solid black;
+            border-radius: 10px;
+        }
+
+        button {
+            margin-top: 5px;
+            transition-duration: 0.4s;
+            background-color: white;
+            color: black;
+            border: 1px solid #4CAF50;
+            /* Green */
+            border-radius: 12px;
+        }
+
+        button:hover {
+            background-color: #4CAF50;
+            /* Green */
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="regibox" align="center">
+        <form method="POST" action="select_date">
+            {% csrf_token %}
+            <input type="date" id="date" name="date" value="2021-02-20" min="2021-02-20" max="2022-01-01">
+            <br><br>
+            <button type="submit" value="submit">예매할 날짜 선택</button>
+        </form>
+    </div>
+    <br><br>
+    <div class="regibox" align="center">
+        <form method="POST" action="cancel_date">
+            {% csrf_token %}
+            <input type="date" id="date" name="date" value="2021-02-20" min="2021-02-20" max="2022-01-01">
+            <br><br>
+            <button type="submit" value="submit">취소할 날짜 선택</button>
+        </form>
+    </div>
+</body>
+
+</html>

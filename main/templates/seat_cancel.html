@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-    <title>멋쟁이사자처럼 at 순천향대학교</title>
+    <title>버스예매취소</title>
     <link rel="stylesheet" type="text/css" href="main static/css/seat.css">
     <style>
         *,
@@ -259,6 +259,22 @@
             -webkit-animation-name: rubberBand;
             animation-name: rubberBand;
         }
+
+        button {
+            margin-top: 5px;
+            transition-duration: 0.4s;
+            background-color: white;
+            color: black;
+            border: 1px solid #4CAF50;
+            /* Green */
+            border-radius: 12px;
+        }
+
+        button:hover {
+            background-color: #4CAF50;
+            /* Green */
+            color: white;
+        }
     </style>
 </head>
 
@@ -269,7 +285,7 @@
             <h1>Please select a seat</h1>
         </div>
       
-        <form action="chk" method="post">
+        <form action="chk_cancel" method="post">
             {% csrf_token %}
             <ol class="cabin fuselage">
                 <li class="row row--1">
@@ -323,6 +339,7 @@
 
 
             </ol>
+            <input type="hidden" id="date" name="date" value={{date}}>
             <button type="submit" value="submit">취소하기</button>
         </form>
        

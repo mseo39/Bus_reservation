@@ -19,8 +19,9 @@ import main.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',main.views.seat,name="seat"),
     path('chk',main.views.chk,name="chk"),
-    path('cancel',main.views.seat_cancel,name="seat_cancel"),
-    path('chk_cancel',main.views.chk_cancel,name="chk_cancel"),
+     path('chk_cancel',main.views.chk_cancel,name="chk_cancel"),
+    path('select_date',main.views.select_date,name="select_date"),
+    path('cancel_date',main.views.cancel_date,name="cancel_date"),
+    path('date',main.views.date,name="date"),
 ]
