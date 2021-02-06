@@ -29,4 +29,6 @@ urlpatterns = [
     path('signup/', main.views.signup, name="signup"),
     path('login/', main.views.login, name="login"),
     path('logout/', LogoutView.as_view(next_page='date'), name="logout"),
+
+    path('mypage',main.views.mypage, name="mypage"),
 ]

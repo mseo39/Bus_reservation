@@ -21,21 +21,6 @@
             border-radius: 10px;
         }
 
-        button {
-            margin-top: 5px;
-            transition-duration: 0.4s;
-            background-color: white;
-            color: black;
-            border: 1px solid #4CAF50;
-            /* Green */
-            border-radius: 12px;
-        }
-
-        button:hover {
-            background-color: #4CAF50;
-            /* Green */
-            color: white;
-        }
     </style>
 </head>
 
@@ -44,12 +29,18 @@
     {% if user.is_authenticated %}
     <li><a> 어서오세요! {{user}}님 </a></li>
     <li><a href="{% url 'logout' %}" type="submit">로그아웃</a></li>
+    <form method="POST" action="mypage">
+        {% csrf_token %}
+        <input type="hidden" id="user" name="user" value={{user}}>
+        <button type="submit" value="submit">마이페이지</button>
+    </form>
     
 
     <div class="regibox" align="center">
         <form method="POST" action="select_date">
             {% csrf_token %}
             <input type="date" id="date" name="date" value="2021-02-20" min="2021-02-20" max="2022-01-01">
+            <input type="hidden" id="user" name="user" value={{user}}>
             <br><br>
             <button type="submit" value="submit">예매할 날짜 선택</button>
         </form>
@@ -59,6 +50,7 @@
         <form method="POST" action="cancel_date">
             {% csrf_token %}
             <input type="date" id="date" name="date" value="2021-02-20" min="2021-02-20" max="2022-01-01">
+            <input type="hidden" id="user" name="user" value={{user}}>
             <br><br>
             <button type="submit" value="submit">취소할 날짜 선택</button>
         </form>

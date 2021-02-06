@@ -42,9 +42,12 @@ def chk(request):
     if request.method == 'POST':
         selected = request.POST.getlist('answer[]')
         date=request.POST['date']
+        user=request.POST['user']
+
         for select in selected:
             number=get_object_or_404(Bus, number=select, date=date)
             number.check+=1
+            number.user=user
             number.save()
 
         return redirect('date')
@@ -56,10 +59,12 @@ def chk_cancel(request):
     if request.method == 'POST':
         selected = request.POST.getlist('answer[]')
         date=request.POST['date']
+        user=request.POST['user']
 
         for select in selected:
-            number=get_object_or_404(Bus, number=select, date=date)
+            number=get_object_or_404(Bus, number=select, date=date, user=user)
             number.check-=1
+            number.user=""
             number.save()
 
         return redirect('date')
@@ -70,10 +75,11 @@ def chk_cancel(request):
 
 def select_date(request):
     #폼 입력값 가져오기
+
     date=request.POST['date']
+    user=request.POST['user']
 
     if Bus.objects.filter(date__contains='{}'.format(date)).count()>0:
-        date=request.POST['date']
         chk_list = []
         i=1
         while i<10:
@@ -95,11 +101,12 @@ def select_date(request):
             bus.save()
             i=i+1
         
-        return render(request,'seat.html',{'date':date})
+        return render(request,'seat.html',{'date':date, 'user':user})
 
 def cancel_date(request):
     #폼 입력값 가져오기
     date=request.POST['date']
+    user=request.POST['user']
 
     chk_list = []
     i=1
@@ -111,7 +118,7 @@ def cancel_date(request):
             chk_list.append("disabled")
         i=i+1
 
-    return render(request,'seat_cancel.html',{'list':chk_list, 'date':date})
+    return render(request,'seat_cancel.html',{'list':chk_list, 'date':date, 'user':user})
 
 def date(request):
 
@@ -149,3 +156,11 @@ def login(request):
             return HttpResponse('Login failed. Try again.')
     else:
         return render(request, 'login.html')
+
+#--------------------------마이페이지
+
+def mypage(request):
+    if request.method == "POST":
+        user=request.POST['user']
+        info=Bus.objects.filter(user__contains='{}'.format(user))
+        return render(request,'mypage.html',{'info':info, 'user':user})
